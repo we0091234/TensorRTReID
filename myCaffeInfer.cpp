@@ -350,8 +350,8 @@ int main(/*int argc,char **argv*/)
 	const char *deployFile = "/home/cxl/tensorCaffe/caffeTensorRT/model/net_36.prototxt";
 	// char *filePath = "E:\\REID\\Reid\\1";
 	char *trtSavePath = "/home/cxl/tensorCaffe/caffeTensorRT/ReID.trt";
-    float threshold = 0.5;
-	char * galleryPath = "/home/data/cxl/ReidTest";
+    float threshold = 0.9;
+	char * galleryPath = "/home/data/cxl/ReidTest/oriPic";
 	string txtname = "rm_repeatID_same_id_" +to_string(threshold)+".txt";
 	float *data = new float[INPUT_H*INPUT_W*CHANNELS];
 	float mean_data[] = { 97.59758647 , 99.04790283, 104.8204798 };
