@@ -5,7 +5,7 @@
 #include "dlib/clustering/chinese_whispers.h"
 #include <fstream>
 #define  numAttribute 11
-#define shortSSE  1
+#define shortSSE  0
 #define fileSize 100
 #define IdSize 50
 
@@ -16,9 +16,9 @@ using namespace std;
 static const int INPUT_H = 144; //输入图像高
 static const int INPUT_W = 96;//输入图像宽
 static const int CHANNELS = 3;//输入图像通道
-const int OUTPUT_SIZE = 128;//输出特征维度
+const int OUTPUT_SIZE = 512;//输出特征维度
 const char* INPUT_BLOB_NAME = "data";//deploy文件中定义的输入层名称
-const char* OUTPUT_BLOB_NAME = "batch_norm_blob55";//deploy文件中定义的输出层名称
+const char* OUTPUT_BLOB_NAME = "batch_norm_blob2";//deploy文件中定义的输出层名称
 
 typedef struct idSimilarity
 {
@@ -125,7 +125,7 @@ struct reidstruct
 	vector<float>feat_float;
 };
 
-int main_map(/*int argc,char **argv*/)
+int main(/*int argc,char **argv*/)
 {
 	cudaSetDevice(0);
 
@@ -139,10 +139,10 @@ int main_map(/*int argc,char **argv*/)
 	float scale = (int)0x7fff;
 	// const char *gender[] = { "女","男" };
 	// IHostMemory *gieModelStream{ nullptr };
-	const char *modelFile = "/home/cxl/tensorCaffe/caffeTensorRT/model/net_36.caffemodel";
-	const char *deployFile = "/home/cxl/tensorCaffe/caffeTensorRT/model/net_36.prototxt";
+	const char *modelFile = "../reuslt/net_76.caffemodel";
+	const char *deployFile = "../reuslt/net_76.prototxt";
 	// char *filePath = "E:\\REID\\Reid\\1";
-	char *trtSavePath = "/home/cxl/tensorCaffe/caffeTensorRT/ReID.trt";
+	char *trtSavePath = "/home/cxl/tensorCaffe/caffeTensorRT/ReID76.trt";
 	char * queryPath = "/home/cxl/data/Market/query";
 	char * galleryPath = "/home/cxl/data/Market/gallery";
 	float *data = new float[INPUT_H*INPUT_W*CHANNELS];
@@ -153,7 +153,7 @@ int main_map(/*int argc,char **argv*/)
 	GalleryFileList.clear();
 	vector<int>label;
 	TrtClassificer myClassifier(INPUT_H, INPUT_W, CHANNELS, INPUT_BLOB_NAME, OUTPUT_BLOB_NAME, OUTPUT_SIZE);
-	// myClassifier.CaffeToGIEModel(deployFile, modelFile, std::vector < std::string > { OUTPUT_BLOB_NAME }, 1, trtSavePath);
+	myClassifier.CaffeToGIEModel(deployFile, modelFile, std::vector < std::string > { OUTPUT_BLOB_NAME }, 1, trtSavePath);
 	myClassifier.readTrtModel(trtSavePath);
 	// size_t size{ 0 };
 	vector<string> fileType={"jpg"};
@@ -332,7 +332,7 @@ int main_map(/*int argc,char **argv*/)
 }
 
 
-int main(/*int argc,char **argv*/)
+int main_julei(/*int argc,char **argv*/)
 {
 	cudaSetDevice(0);
 
