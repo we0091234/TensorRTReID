@@ -5,7 +5,7 @@
 #include "dlib/clustering/chinese_whispers.h"
 #include <fstream>
 #define  numAttribute 11
-#define shortSSE  0
+#define shortSSE  1
 #define fileSize 100
 #define IdSize 50
 
@@ -13,10 +13,10 @@ using namespace nvcaffeparser1;
 using namespace cv;
 using namespace std;
 
-static const int INPUT_H = 144; //输入图像高
+static const int INPUT_H = 96; //输入图像高
 static const int INPUT_W = 96;//输入图像宽
 static const int CHANNELS = 3;//输入图像通道
-const int OUTPUT_SIZE = 512;//输出特征维度
+const int OUTPUT_SIZE = 64;//输出特征维度
 const char* INPUT_BLOB_NAME = "data";//deploy文件中定义的输入层名称
 const char* OUTPUT_BLOB_NAME = "batch_norm_blob2";//deploy文件中定义的输出层名称
 
@@ -125,7 +125,7 @@ struct reidstruct
 	vector<float>feat_float;
 };
 
-int main(/*int argc,char **argv*/)
+int main_map(/*int argc,char **argv*/)
 {
 	cudaSetDevice(0);
 
@@ -139,14 +139,15 @@ int main(/*int argc,char **argv*/)
 	float scale = (int)0x7fff;
 	// const char *gender[] = { "女","男" };
 	// IHostMemory *gieModelStream{ nullptr };
-	const char *modelFile = "../reuslt/net_76.caffemodel";
-	const char *deployFile = "../reuslt/net_76.prototxt";
+	const char *modelFile = "/home/cxl/tensorCaffe/caffeTensorRT/model/reidLogo/net_59-201-ok-logo_deploy.caffemodel";
+	const char *deployFile = "/home/cxl/tensorCaffe/caffeTensorRT/model/reidLogo/net_59-201-ok-logo_deploy.prototxt";
 	// char *filePath = "E:\\REID\\Reid\\1";
-	char *trtSavePath = "/home/cxl/tensorCaffe/caffeTensorRT/ReID76.trt";
-	char * queryPath = "/home/cxl/data/Market/query";
-	char * galleryPath = "/home/cxl/data/Market/gallery";
+	char *trtSavePath = "/home/cxl/tensorCaffe/caffeTensorRT/model/reidLogo/logo.trt";
+	char * queryPath = "/home/data/xiaolei/logo/query";
+	char * galleryPath = "/home/data/xiaolei/logo/gallery";
 	float *data = new float[INPUT_H*INPUT_W*CHANNELS];
-	float mean_data[] = { 97.59758647 , 99.04790283, 104.8204798 };
+	// float mean_data[] = { 97.59758647 , 99.04790283, 104.8204798 };
+	float mean_data[] = {110.18423074235518, 110.268577736285, 115.9420113290349 };
 	vector<string>querryFilelist;
 	querryFilelist.clear();
 	vector<string>GalleryFileList;
@@ -332,7 +333,7 @@ int main(/*int argc,char **argv*/)
 }
 
 
-int main_julei(/*int argc,char **argv*/)
+int main(int argc,char **argv)
 {
 	cudaSetDevice(0);
 
@@ -349,12 +350,13 @@ int main_julei(/*int argc,char **argv*/)
 	const char *modelFile = "/home/cxl/tensorCaffe/caffeTensorRT/model/net_36.caffemodel";
 	const char *deployFile = "/home/cxl/tensorCaffe/caffeTensorRT/model/net_36.prototxt";
 	// char *filePath = "E:\\REID\\Reid\\1";
-	char *trtSavePath = "/home/cxl/tensorCaffe/caffeTensorRT/ReID.trt";
-    float threshold = 0.9;
-	char * galleryPath = "/home/data/cxl/ReidTest/oriPic";
-	string txtname = "rm_repeatID_same_id_" +to_string(threshold)+".txt";
+	char *trtSavePath = "/home/cxl/tensorCaffe/caffeTensorRT/model/reidLogo/logo.trt";
+    float threshold = 0.8;
+	char * galleryPath = "/home/data/cxl/ReidData/head/6";
+	string txtname = "../logo_" +to_string(threshold)+".txt";
 	float *data = new float[INPUT_H*INPUT_W*CHANNELS];
-	float mean_data[] = { 97.59758647 , 99.04790283, 104.8204798 };
+	// float mean_data[] = { 97.59758647 , 99.04790283, 104.8204798 };
+    float mean_data[] = {110.18423074235518, 110.268577736285, 115.9420113290349 };
 
 	vector<string>GalleryFileList;
 	GalleryFileList.clear();
@@ -497,7 +499,7 @@ int main_julei(/*int argc,char **argv*/)
 	}
 	fout.close();
 	printf("clustering Done\n");
-	std::system("pause");
+	// std::system("pause");
 	return 0;
 
 	

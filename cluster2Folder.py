@@ -3,8 +3,8 @@ import shutil
 
 print("haha")
 
-f = open("/home/cxl/tensorCaffe/caffeTensorRT/build/rm_repeatID_same_id_0.900000.txt")
-savePath = '/home/data/cxl/ReidTest/result'
+f = open("/home/cxl/tensorCaffe/caffeTensorRT/logo_0.800000.txt")
+savePath = '/home/data/cxl/ReidData/result'
 i = 0
 while True:
     line = f.readline()
